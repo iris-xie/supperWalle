@@ -45,10 +45,15 @@ class ConfigurationController extends Controller
             if ($is_upload) {
                 if ($configuration->load(\Yii::$app->request->post()) && $configuration->validate()) {
                     $filename                   = $upload->configuration->baseName.'.'.$upload->configuration->extension;
-                    $configuration->upload_path = self::UPLOAD_PATH.$filename;
+                    $configuration->upload_path = self::UPLOAD_PATH;
                     $configuration->file_name   = $filename;
                     if ($configuration->save(false)) {
                         Yii::$app->session->setFlash('success', Yii::t('configuration', 'message success'));
+                        $zip = new \ZipArchive();
+                        if(true === $zip->open(self::UPLOAD_PATH.'/'.$filename)){
+                            $zip->extractTo(self::UPLOAD_PATH);
+                            $zip->close();
+                        }
                     }
                 }
             } else {

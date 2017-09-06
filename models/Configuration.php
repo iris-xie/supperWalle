@@ -19,18 +19,16 @@ class Configuration extends ActiveRecord
 
     public function rules ()
     {
-        return [[['project_id', 'user_id', 'username', 'origin_path', 'remark'], 'required'],
+        return [[['project_id', 'user_id', 'username', 'remark'], 'required'],
                 [['project_id', 'user_id'], 'integer'],
                 [['created_at', 'updated_at'], 'safe'],
-                [['username', 'origin_path', 'remark'], 'string'],
-                ['origin_path', 'match', 'pattern' => '/^([\w]+[\/]?)+$/',]
-
+                [['username', 'remark'], 'string'],
         ];
     }
 
     public function attributeLabels ()
     {
-        return ['origin_path' => '文件路径',
+        return [
                 'project_id'  => '项目',
                 'user_id'     => '用户id',
                 'username'    => '用户名',

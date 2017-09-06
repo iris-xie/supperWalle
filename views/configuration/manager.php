@@ -6,8 +6,6 @@
  * Time: 9:41
  */
 $this->title = yii::t('configuration', 'manage title');
-use yii\widgets\LinkPager;
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\bootstrap\Alert;
@@ -21,7 +19,6 @@ use yii\bootstrap\Alert;
                 <tbody>
                 <tr>
                     <th><?= yii::t('configuration', 'file name') ?></th>
-                    <th><?= yii::t('configuration', 'file path') ?></th>
                     <th><?= yii::t('configuration', 'user') ?></th>
                     <th><?= yii::t('configuration', 'project') ?></th>
                     <th><?= yii::t('configuration', 'remark') ?></th>
@@ -31,9 +28,6 @@ use yii\bootstrap\Alert;
                         <div>
                             <?= $form->field($upload, 'configuration')->fileInput()->label(false); ?>
                         </div>
-                    </td>
-                    <td>
-                        <?= $form->field($configuration, 'origin_path')->textInput()->label(false); ?>
                     </td>
                     <td>
                         <?= $user['name'];?>

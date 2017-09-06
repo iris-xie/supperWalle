@@ -20,12 +20,8 @@ class UploadForm extends Model
 
     public function rules ()
     {
-        return [['configuration',
-                 'file',
-                 'skipOnEmpty' => false,
-                 'extensions' => 'php',
-                 'checkExtensionByMimeType' => false
-                ],
+        return [
+            [['configuration'], 'file', 'skipOnEmpty' => false, 'extensions' => 'zip', 'maxSize' => 10485760, 'checkExtensionByMimeType' => false],
         ];
     }
 
@@ -44,7 +40,6 @@ class UploadForm extends Model
             }
         } else {
             $this->addError('configuration', $this->getErrors());
-
             return false;
         }
     }
