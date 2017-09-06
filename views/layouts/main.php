@@ -265,10 +265,19 @@ $userName =  \Yii::$app->user->id ? $user->getName() : '';
 
                 <li class="<?= \Yii::$app->controller->action->id == 'check' ? 'active' : '' ?>">
                     <a href="<?= Url::to('@web/walle/check/') ?>">
-                        <i class=" icon-eye-open"></i>
+                        <i class="icon-eye-open"></i>
                         <span class="menu-text">
                             <?= yii::t('w', 'menu file md5') ?>
-</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="<?= \Yii::$app->controller->action->id == 'manage' ? 'active': ''?>">
+                    <a href="<?= Url::to('@web/configuration/manage')?>">
+                        <i class="icon-cloud-upload"></i>
+                        <span class="menu-text">
+                            <?= yii::t('w', 'menu upload manage') ?>
+                        </span>
                     </a>
                 </li>
             </ul><!-- /.nav-list -->

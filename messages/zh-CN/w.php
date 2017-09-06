@@ -55,6 +55,7 @@ return [
     'menu task list' => '我的上线单',
     'menu submit task' => '提交上线单',
     'menu file md5' => '线上文件指纹',
+    'menu upload manage' => '配置文件上传管理',
     'breadcrumb index' => '首页',
 
     'need login' => '请先登录，再操作：）',
