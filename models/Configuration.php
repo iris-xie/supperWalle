@@ -28,11 +28,10 @@ class Configuration extends ActiveRecord
 
     public function attributeLabels ()
     {
-        return [
-                'project_id'  => '项目',
-                'user_id'     => '用户id',
-                'username'    => '用户名',
-                'remark'      => '备注',
+        return ['project_id' => '项目',
+                'user_id'    => '用户id',
+                'username'   => '用户名',
+                'remark'     => '备注',
         ];
     }
 }

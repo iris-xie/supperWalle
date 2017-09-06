@@ -36,9 +36,13 @@ class ConfigurationController extends Controller
         foreach ($projects as $index => $project) {
             $select[(int) $projects[$index]['id']] = $projects[$index]['name'];
         }
-        $select[0]     = '项目名称';
-        $configuration = new Configuration();
+        $details = Configuration::find()->where(['user_id' => $this->uid])->orderBy(['id' => 'SORT_ASC'])->asArray()->all();
+        $details = $details ?: [];
+        foreach ($details as $k => $detail){
+            $details[$k]['project_name'] = Project::findOne(['id' => $detail['project_id']])['name'];
+        }
         $upload        = new UploadForm();
+        $configuration = new Configuration();
         if (\Yii::$app->request->isPost) {
             $upload->configuration = UploadedFile::getInstance($upload, 'configuration');
             $is_upload             = $upload->upload();
@@ -55,17 +59,18 @@ class ConfigurationController extends Controller
                             $zip->close();
                         }
                     }
+                    return $this->redirect(['configuration/manage']);
                 }
             } else {
                 Yii::$app->session->setFlash('failure', Yii::t('configuration', 'message failure'));
             }
-
         }
 
         return $this->render('manager', ['user'          => $user,
                                          'select'        => $select,
                                          'configuration' => $configuration,
-                                         'upload'        => $upload
+                                         'upload'        => $upload,
+                                         'details'    => $details,
         ]);
     }
 }

@@ -23,6 +23,24 @@ use yii\bootstrap\Alert;
                     <th><?= yii::t('configuration', 'project') ?></th>
                     <th><?= yii::t('configuration', 'remark') ?></th>
                 </tr>
+                <?php if(!empty($details)) { ?>
+                    <?php foreach ($details as $detail) {?>
+                    <tr>
+                        <td>
+                            <?= $detail['file_name'];?>
+                        </td>
+                        <td>
+                            <?= $detail['username'];?>
+                        </td>
+                        <td>
+                            <?= $detail['project_name'];?>
+                        </td>
+                        <td>
+                            <?= $detail['remark']; ?>
+                        </td>
+                    </tr>
+                    <?php }?>
+                <?php } ?>
                 <tr>
                     <td>
                         <div>
