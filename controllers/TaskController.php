@@ -230,5 +230,25 @@ class TaskController extends Controller
         $task->save();
         static::renderJson(['status' => \Yii::t('w', 'task_status_' . $task->status)]);
     }
+    /**
+     * 比较版本
+     * @param $id
+     *
+     */
+    public function actionTaskcommit($id){
+        $Task = Task::find($id)->asArray()->one();
+        if (!$Task) {
+            throw new \Exception(yii::t('task', 'unknown deployment bill'));
+        }
+        $data = array();
+        if($Task['ex_link_id'] && $Task['link_id']){
+            $data = array();
+            $link_id = explode('-',$Task['link_id'])[1];
+            $ex_link_id = explode('-',$Task['ex_link_id'])[1];
+            exec("git diff --name-status $link_id  $ex_link_id",$data);
+            //exec("git diff --name-status  624ba3646 03332d02c",$data);
+        }
+        static::renderJson([$data]);
+    }
 
 }

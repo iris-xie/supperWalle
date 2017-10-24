@@ -8,6 +8,10 @@ use yii\widgets\LinkPager;
 use yii\helpers\Url;
 
 ?>
+<style type="text/css">
+.commit{ text-align:right;}
+.commit span{ float:left;}
+</style>
 <div class="box">
     <div class="box-header">
         <form action="/task/" method="POST">
@@ -66,9 +70,13 @@ use yii\helpers\Url;
                     <td><?= $item['title'] ?></td>
                     <td><?= $item['updated_at'] ?></td>
                     <td><?= $item['branch'] ?></td>
-                    <td><?= $item['commit_id'] ?></td>
+                    <td class="commit">
+                        <span><?= $item['commit_id'] ?></span>
+                        <a class="diff" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"   href="javascript:;" data-id="<?= $item['id'] ?>" style="color: #468847;">比较差异</a>
+                    </td>
                     <td class="<?= \Yii::t('w', 'task_status_' . $item['status'] . '_color') ?>">
-                        <?= \Yii::t('w', 'task_status_' . $item['status']) ?></td>
+                        <?= \Yii::t('w', 'task_status_' . $item['status']) ?>
+                    </td>
                     <td>
                         <div class="action-buttons">
                             <?php if ($audit && !in_array($item['status'],
@@ -114,7 +122,36 @@ use yii\helpers\Url;
     </div><!-- /.box-body -->
     <?= LinkPager::widget(['pagination' => $pages]); ?>
 </div>
+<div class="box-body table-responsive no-padding clearfix">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>更改文件路径</tr>
+        </thead>
+        <tbody>
+            <?php //foreach (){ ?>
+            <!--<tr><td></td></tr>-->
+            <?php //} ?>
+        </tbody>
+</div>
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+<!--    Launch demo modal-->
+<!--</button>-->
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">比较文件目录</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(function() {
         // 发起上线
@@ -156,6 +193,23 @@ use yii\helpers\Url;
                     }
                 })
             }
+        })
+        //比较当前commit id与上一个commit id 比较
+        $('.diff').click(function(e) {
+            $(".list-group li").remove();
+            $this = $(this);
+            $.get('<?= Url::to('@web/task/taskcommit?id=') ?>' + $this.data('id'), function(o) {
+               var html='';
+               if(o.data){
+                   for($i=0;$i<o.data.length;$i++){
+                       html = '<li class="list-group-item">'+o.data[$i]+'</li>';
+                   }
+               }else{
+                    html = '';
+               }
+                $(".list-group").append(html);
+            })
+            $("#myModal").modal();
         })
     })
 </script>
