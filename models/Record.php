@@ -34,6 +34,10 @@ class Record extends \yii\db\ActiveRecord
      * 本地代码更新
      */
     const ACTION_CLONE = 53;
+    /**
+     * 本地代码配置文件合并
+     */
+    const ACTION_CONFIG_COPY = 54;
 
     /**
      * 部署后置触发任务

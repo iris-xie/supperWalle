@@ -499,14 +499,14 @@ class WalleController extends Controller
 
     private function _addConfig()
     {
-        // 更新代码文件
+        // 拷贝配置文件
         $revision = Repo::getRevision($this->conf);
         $sTime = Command::getMs();
         $config_path = Configuration::getNewestConfig($this->task->link_id);
         $ret = $revision->copyConfig($this->task,$config_path); // 拷贝配置文件
         // 记录执行时间
         $duration = Command::getMs() - $sTime;
-        Record::saveRecord($revision, $this->task->id, Record::ACTION_CLONE, $duration);
+        Record::saveRecord($revision, $this->task->id, Record::ACTION_CONFIG_COPY, $duration);
 
         if (!$ret) {
             throw new \Exception(yii::t('walle', 'config add error'));
