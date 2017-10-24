@@ -62,6 +62,23 @@ class Svn extends Command {
     }
 
     /**
+     * 合并配置文件
+     *
+     * @param TaskModel $task
+     * @return bool
+     */
+    public function copyConfig(TaskModel $task,$configFilepath) {
+        // 先更新
+        $destination = Project::getDeployWorkspace($task->link_id);
+        $this->updateRepo($task->branch, $destination);
+        $cmd[] = sprintf('cd %s ', $destination);
+        $cmd[] = sprintf('/usr/bin/env cp -r %s %f', $configFilepath,$destination);
+        $command = join(' && ', $cmd);
+
+        return $this->runLocalCommand($command);
+    }
+
+    /**
      * 获取分支/tag列表
      * 可能后期要换成 svn ls http://xxx/branches
      *

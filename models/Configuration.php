@@ -34,4 +34,17 @@ class Configuration extends ActiveRecord
                 'remark'     => '备注',
         ];
     }
+
+    public static function getNewestConfig($task)
+    {
+        $config = Group::find()
+            ->select(['upload_path','file_name'])
+            ->where(['project_id' => $task])
+            ->orderBy([
+                'update_at' => SORT_DESC,
+            ])
+            ->one();
+
+        return strstr($config['upload_path'].$config['file_name'], '.zip',true);
+    }
 }
