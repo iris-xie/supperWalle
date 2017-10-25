@@ -506,7 +506,8 @@ class WalleController extends Controller
         file_put_contents('/tmp/xielei.txt',print_r($this->task,true)."333\n",FILE_APPEND);
         file_put_contents('/tmp/xielei.txt',print_r($link_id,true)."11111\n",FILE_APPEND);
 
-        $config_path = Configuration::find()
+        $config_path = (new \yii\db\Query())
+            ->from('project_configuration')
             ->select(['upload_path','file_name'])
             ->where(['project_id' => $link_id])
             ->orderBy([
