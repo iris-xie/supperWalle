@@ -37,12 +37,9 @@ class Configuration extends ActiveRecord
 
     public static function getNewestConfig($task)
     {
-        $config = static::find()
+        $config = Configuration::find()
             ->select(['upload_path','file_name'])
             ->where(['project_id' => $task])
-            ->orderBy([
-                'updated_at' => SORT_DESC,
-            ])
             ->one();
         file_put_contents('/tmp/xielei.txt',print_r($config,true)."55555\n",FILE_APPEND);
 

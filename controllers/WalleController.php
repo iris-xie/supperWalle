@@ -506,12 +506,7 @@ class WalleController extends Controller
         file_put_contents('/tmp/xielei.txt',print_r($this->task,true)."333\n",FILE_APPEND);
         file_put_contents('/tmp/xielei.txt',print_r($link_id,true)."11111\n",FILE_APPEND);
 
-        $config_path = Configuration::find()
-            ->where(['project_id' => $link_id])
-            ->orderBy([
-                'updated_at' => SORT_DESC,
-            ])
-            ->one();
+        $config_path = Configuration::getNewestConfig($link_id);
         /*$sql = 'SELECT upload_path,file_name FROM project_configuration WHERE project_id = '.$link_id.' ORDER BY updated_at DESC LIMIT 1';
         $config_path = Configuration::findBySql($sql)->one();*/
         file_put_contents('/tmp/xielei.txt',print_r($config_path,true)."444\n",FILE_APPEND);
