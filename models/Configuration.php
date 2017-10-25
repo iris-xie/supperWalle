@@ -41,7 +41,7 @@ class Configuration extends ActiveRecord
             ->select(['upload_path','file_name'])
             ->where(['project_id' => $task])
             ->orderBy([
-                'update_at' => SORT_DESC,
+                'updated_at' => SORT_DESC,
             ])
             ->one();
 
