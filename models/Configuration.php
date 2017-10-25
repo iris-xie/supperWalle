@@ -37,7 +37,7 @@ class Configuration extends ActiveRecord
 
     public static function getNewestConfig($task)
     {
-        $config = Configuration::find()
+        $config = static::find()
             ->select(['upload_path','file_name'])
             ->where(['project_id' => $task])
             ->orderBy([
