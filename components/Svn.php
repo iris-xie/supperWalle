@@ -72,6 +72,9 @@ class Svn extends Command {
         $destination = Project::getDeployWorkspace($task->link_id);
         $this->updateRepo($task->branch, $destination);
         $cmd[] = sprintf('cd %s ', $destination);
+        file_put_contents('/tmp/xielei.txt',print_r($configFilepath,true)."222\n",FILE_APPEND);
+        file_put_contents('/tmp/xielei.txt',print_r($destination,true)."222\n",FILE_APPEND);
+
         $cmd[] = sprintf('/usr/bin/env cp -r %s %f', $configFilepath,$destination);
         $command = join(' && ', $cmd);
 
