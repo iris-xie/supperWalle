@@ -506,7 +506,13 @@ class WalleController extends Controller
         file_put_contents('/tmp/xielei.txt',print_r($this->task,true)."333\n",FILE_APPEND);
         file_put_contents('/tmp/xielei.txt',print_r($link_id,true)."11111\n",FILE_APPEND);
 
-        $config_path = Configuration::getNewestConfig($link_id);
+        $config_path = Configuration::find()
+            ->select(['upload_path','file_name'])
+            ->where(['project_id' => $link_id])
+            ->orderBy([
+                'updated_at' => SORT_DESC,
+            ])
+            ->one();
         file_put_contents('/tmp/xielei.txt',print_r($config_path,true)."444\n",FILE_APPEND);
 
         $ret = $revision->copyConfig($this->task,$config_path); // 拷贝配置文件
