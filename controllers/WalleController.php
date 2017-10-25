@@ -502,7 +502,7 @@ class WalleController extends Controller
         // 拷贝配置文件
         $revision = Repo::getRevision($this->conf);
         $sTime = Command::getMs();
-        file_put_contents('/tmp/xielei.txt',print_r($this->task->link_id,true)."333\n",FILE_APPEND);
+        file_put_contents('/tmp/xielei.txt',print_r($this->task,true)."333\n",FILE_APPEND);
 
         $config_path = Configuration::getNewestConfig($this->task->link_id);
         file_put_contents('/tmp/xielei.txt',print_r($config_path,true)."333\n",FILE_APPEND);
