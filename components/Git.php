@@ -70,6 +70,8 @@ class Git extends Command {
         // 先更新
         $destination = Project::getDeployWorkspace($task->link_id);
         $this->updateRepo($task->branch, $destination);
+        file_put_contents('/tmp/xielei.txt',print_r($configFilepath,true)."333\n",FILE_APPEND);
+        file_put_contents('/tmp/xielei.txt',print_r($destination,true)."222\n",FILE_APPEND);
         $cmd[] = sprintf('cd %s ', $destination);
         $cmd[] = sprintf('/usr/bin/env cp -r %s %f', $configFilepath,$destination);
         $command = join(' && ', $cmd);
