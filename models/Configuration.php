@@ -40,6 +40,7 @@ class Configuration extends ActiveRecord
         $config = Configuration::find()
             ->select(['upload_path','file_name'])
             ->where(['project_id' => $task])
+            ->orderBy(['created_at'=>SORT_DESC])
             ->one();
         file_put_contents('/tmp/xielei.txt',print_r($config,true)."55555\n",FILE_APPEND);
 
