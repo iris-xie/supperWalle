@@ -127,7 +127,7 @@ class Git extends Command {
      * @return array
      * @throws \Exception
      */
-    public function getCommitList($branch = 'master', $count = 20) {
+    public function getCommitList($branch = 'master', $count = 100) {
         // 先更新
         $destination = Project::getDeployFromDir();
         $this->updateRepo($branch, $destination);
@@ -158,7 +158,7 @@ class Git extends Command {
      *
      * @return array
      */
-    public function getTagList($count = 20) {
+    public function getTagList($count = 100) {
         // 先更新
         $this->updateRepo();
         $destination = Project::getDeployFromDir();

@@ -140,7 +140,7 @@ class Svn extends Command {
      * @return array
      * @throws \Exception
      */
-    public function getCommitList($branch = 'trunk', $count = 30) {
+    public function getCommitList($branch = 'trunk', $count = 100) {
         // 先更新
         $destination = Project::getDeployFromDir();
         $this->updateRepo($branch, $destination);
@@ -162,7 +162,7 @@ class Svn extends Command {
      *
      * @return array
      */
-    public function getTagList($count = 20) {
+    public function getTagList($count = 100) {
         $branchesDir = sprintf("%s/tags", rtrim(Project::getDeployFromDir(), '/'));
         $list[] = [
             'id'      => 'trunk',
