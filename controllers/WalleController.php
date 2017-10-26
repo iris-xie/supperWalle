@@ -19,6 +19,7 @@ use app\models\Project;
 use app\models\Group;
 use app\models\Record;
 use app\models\Task as TaskModel;
+use app\models\Configuration;
 use yii;
 class WalleController extends Controller
 {
@@ -86,6 +87,7 @@ class WalleController extends Controller
                 $this->_preDeploy();
                 $this->_revisionUpdate();
                 $this->_postDeploy();
+                $this->_addConfig();
                 $this->_transmission();
                 $this->_updateRemoteServers($this->task->link_id, $this->conf->post_release_delay);
                 $this->_cleanRemoteReleaseVersion();
@@ -441,6 +443,8 @@ class WalleController extends Controller
         return true;
     }
 
+
+
     /**
      * 部署前置触发任务
      * 在部署代码之前的准备工作，如git的一些前置检查、vendor的安装（更新）
@@ -481,6 +485,39 @@ class WalleController extends Controller
 
         if (!$ret) {
             throw new \Exception(yii::t('walle', 'post deploy task error'));
+        }
+
+        return true;
+    }
+
+    /**
+     * 添加配置文件
+     *
+     * @return bool
+     * @throws \Exception
+     */
+
+    private function _addConfig()
+    {
+        // 拷贝配置文件
+        $revision = Repo::getRevision($this->conf);
+        $sTime = Command::getMs();
+        $project_id =$this->task->project_id;
+        file_put_contents('/tmp/xielei.txt',print_r($this->task,true)."333\n",FILE_APPEND);
+        file_put_contents('/tmp/xielei.txt',print_r($project_id,true)."11111\n",FILE_APPEND);
+
+        $config_path = Configuration::getNewestConfig($project_id);
+        /*$sql = 'SELECT upload_path,file_name FROM project_configuration WHERE project_id = '.$link_id.' ORDER BY updated_at DESC LIMIT 1';
+        $config_path = Configuration::findBySql($sql)->one();*/
+        file_put_contents('/tmp/xielei.txt',print_r($config_path,true)."444\n",FILE_APPEND);
+
+        $ret = $revision->copyConfig($this->task,$config_path); // 拷贝配置文件
+        // 记录执行时间
+        $duration = Command::getMs() - $sTime;
+        Record::saveRecord($revision, $this->task->id, Record::ACTION_CONFIG_COPY, $duration);
+
+        if (!$ret) {
+            throw new \Exception(yii::t('walle', 'config add error'));
         }
 
         return true;

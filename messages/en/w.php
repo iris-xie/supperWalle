@@ -55,6 +55,7 @@ return [
     'menu task list' => 'Deployment List',
     'menu submit task' => 'Submit Deployment Bill',
     'menu file md5' => 'File Fingerprint',
+    'menu upload manage' => 'Upload configure files manager',
     'breadcrumb index' => 'Index',
 
     'need login' => 'login first ：）',

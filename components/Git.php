@@ -61,6 +61,25 @@ class Git extends Command {
     }
 
     /**
+     * 合并配置文件
+     *
+     * @param TaskModel $task
+     * @return bool
+     */
+    public function copyConfig(TaskModel $task,$configFilepath) {
+        // 先更新
+        $destination = Project::getDeployWorkspace($task->link_id);
+        $this->updateRepo($task->branch, $destination);
+        file_put_contents('/tmp/xielei.txt',print_r($configFilepath,true)."333\n",FILE_APPEND);
+        file_put_contents('/tmp/xielei.txt',print_r($destination,true)."222\n",FILE_APPEND);
+        $cmd[] = sprintf('cd %s ', $destination);
+        $cmd[] = sprintf('/usr/bin/env cp -r '.$configFilepath.DIRECTORY_SEPARATOR.'*  '.$destination);
+        $command = join(' && ', $cmd);
+
+        return $this->runLocalCommand($command);
+    }
+
+    /**
      * 获取分支列表
      *
      * @return array
