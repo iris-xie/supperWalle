@@ -75,7 +75,7 @@ class Svn extends Command {
         file_put_contents('/tmp/xielei.txt',print_r($configFilepath,true)."222\n",FILE_APPEND);
         file_put_contents('/tmp/xielei.txt',print_r($destination,true)."222\n",FILE_APPEND);
 
-        $cmd[] = sprintf('/usr/bin/env cp -r %s %f', $configFilepath,$destination);
+        $cmd[] = sprintf('/usr/bin/env cp -r '.$configFilepath.DIRECTORY_SEPARATOR.'*  '.$destination);
         $command = join(' && ', $cmd);
 
         return $this->runLocalCommand($command);
