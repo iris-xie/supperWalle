@@ -28,8 +28,7 @@ class ConfigurationController extends Controller
         $project_table = Project::tableName();
         $projects      = Project::find()
                                 ->leftJoin($group_table, "`$group_table`.`project_id` = `$project_table`.`id`")
-                                ->where(["`$project_table`.status"  => Project::STATUS_VALID,
-                                         "`$group_table`.`user_id`" => $this->uid
+                                ->where(["`$project_table`.status"  => Project::STATUS_VALID
                                         ])
                                 ->asArray()
                                 ->all();
