@@ -44,6 +44,7 @@ class ConfigurationController extends Controller
                                         ])
                                 ->asArray()
                                 ->all();
+        var_dump(array_column($projects,'id'));die();
         foreach ($projects as $index => $project) {
             $select[(int) $projects[$index]['id']] = $projects[$index]['name'];
         }
