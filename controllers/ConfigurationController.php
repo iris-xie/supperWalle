@@ -26,10 +26,10 @@ class ConfigurationController extends Controller
 
         $sort = new Sort([
             'attributes' => [
-                'time' => [
-                    'desc' => ['created_at' => SORT_DESC, 'updated_at' => SORT_DESC],
+                'id' => [
+                    'desc' => ['id' => SORT_DESC],
                     'default' => SORT_DESC,
-                    'label' => 'time',
+                    'label' => 'id',
                 ],
             ],
         ]);
@@ -50,7 +50,6 @@ class ConfigurationController extends Controller
 
 
         $details = Configuration::find()->where(['project_id' => array_column($projects,'id')])->orderBy($sort->orders)->asArray()->all();
-        var_dump($details);die();
         $details = $details ?: [];
         foreach ($details as $k => $detail){
             $details[$k]['project_name'] = Project::findOne(['id' => $detail['project_id']])['name'];
