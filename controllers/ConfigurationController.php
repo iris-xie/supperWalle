@@ -24,6 +24,16 @@ class ConfigurationController extends Controller
     public function actionManage ()
     {
 
+        $sort = new Sort([
+            'attributes' => [
+                'time' => [
+                    'desc' => ['created_at' => SORT_DESC, 'updated_at' => SORT_DESC],
+                    'default' => SORT_DESC,
+                    'label' => 'time',
+                ],
+            ],
+        ]);
+
         $select        = [];
         $user          = User::findOne(['id' => $this->uid]);
         $group_table   = Group::tableName();
@@ -37,7 +47,9 @@ class ConfigurationController extends Controller
         foreach ($projects as $index => $project) {
             $select[(int) $projects[$index]['id']] = $projects[$index]['name'];
         }
-        $details = Configuration::find()->orderBy(['id' => 'SORT_DESC'])->asArray()->all();
+
+
+        $details = Configuration::find()->where(['project_id' => array_keys($select)])->orderBy(['id' => 'SORT_ASC'])->asArray()->all();
         $details = $details ?: [];
         foreach ($details as $k => $detail){
             $details[$k]['project_name'] = Project::findOne(['id' => $detail['project_id']])['name'];
