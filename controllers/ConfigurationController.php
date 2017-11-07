@@ -15,6 +15,7 @@ use app\models\Group;
 use app\models\Project;
 use app\models\Configuration;
 use yii\web\UploadedFile;
+use yii\data\Sort;
 use yii;
 
 class ConfigurationController extends Controller
@@ -22,6 +23,17 @@ class ConfigurationController extends Controller
     const UPLOAD_PATH = __DIR__.'/../web/upload/';
     public function actionManage ()
     {
+
+        $sort = new Sort([
+            'attributes' => [
+                'time' => [
+                    'desc' => ['created_at' => SORT_DESC, 'updated_at' => SORT_DESC],
+                    'default' => SORT_DESC,
+                    'label' => 'time',
+                ],
+            ],
+        ]);
+
         $select        = [];
         $user          = User::findOne(['id' => $this->uid]);
         $group_table   = Group::tableName();
@@ -30,7 +42,7 @@ class ConfigurationController extends Controller
                                 ->leftJoin($group_table, "`$group_table`.`project_id` = `$project_table`.`id`")
                                 ->where(["`$project_table`.status"  => Project::STATUS_VALID
                                         ])
-                                ->orderBy()
+                                ->orderBy($sort->orders)
                                 ->asArray()
                                 ->all();
         foreach ($projects as $index => $project) {
