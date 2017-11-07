@@ -24,31 +24,20 @@ class ConfigurationController extends Controller
     public function actionManage ()
     {
 
-        $sort = new Sort([
-            'attributes' => [
-                'time' => [
-                    'desc' => ['created_at' => SORT_DESC, 'updated_at' => SORT_DESC],
-                    'default' => SORT_DESC,
-                    'label' => 'time',
-                ],
-            ],
-        ]);
-
         $select        = [];
         $user          = User::findOne(['id' => $this->uid]);
-        //$group_table   = Group::tableName();
+        $group_table   = Group::tableName();
         $project_table = Project::tableName();
         $projects      = Project::find()
-                                //->leftJoin($group_table, "`$group_table`.`project_id` = `$project_table`.`id`")
+                                ->leftJoin($group_table, "`$group_table`.`project_id` = `$project_table`.`id`")
                                 ->where(["`$project_table`.status"  => Project::STATUS_VALID
                                         ])
-                                ->orderBy($sort->orders)
                                 ->asArray()
                                 ->all();
         foreach ($projects as $index => $project) {
             $select[(int) $projects[$index]['id']] = $projects[$index]['name'];
         }
-        $details = Configuration::find()->where(['user_id' => $this->uid])->orderBy(['id' => 'SORT_ASC'])->asArray()->all();
+        $details = Configuration::find()->orderBy(['id' => 'SORT_ASC'])->asArray()->all();
         $details = $details ?: [];
         foreach ($details as $k => $detail){
             $details[$k]['project_name'] = Project::findOne(['id' => $detail['project_id']])['name'];
