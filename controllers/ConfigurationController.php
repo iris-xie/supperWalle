@@ -30,6 +30,7 @@ class ConfigurationController extends Controller
                                 ->leftJoin($group_table, "`$group_table`.`project_id` = `$project_table`.`id`")
                                 ->where(["`$project_table`.status"  => Project::STATUS_VALID
                                         ])
+                                ->orderBy()
                                 ->asArray()
                                 ->all();
         foreach ($projects as $index => $project) {
