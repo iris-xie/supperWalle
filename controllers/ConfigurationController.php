@@ -27,6 +27,7 @@ class ConfigurationController extends Controller
         $sort = new Sort([
             'attributes' => [
                 'id' => [
+                    'asc' => ['id' => SORT_ASC],
                     'desc' => ['id' => SORT_DESC],
                     'default' => SORT_DESC,
                     'label' => 'id',
