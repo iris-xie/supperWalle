@@ -44,13 +44,12 @@ class ConfigurationController extends Controller
                                         ])
                                 ->asArray()
                                 ->all();
-        var_dump(array_column($projects,'id'));die();
         foreach ($projects as $index => $project) {
             $select[(int) $projects[$index]['id']] = $projects[$index]['name'];
         }
 
 
-        $details = Configuration::find()->where(['project_id' => array_column($projects,'id')])->orderBy(['id' => 'SORT_ASC'])->asArray()->all();
+        $details = Configuration::find()->where(['project_id' => array_column($projects,'id')])->orderBy(['id' => 'SORT_DESC'])->asArray()->all();
         $details = $details ?: [];
         foreach ($details as $k => $detail){
             $details[$k]['project_name'] = Project::findOne(['id' => $detail['project_id']])['name'];
