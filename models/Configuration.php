@@ -42,7 +42,6 @@ class Configuration extends ActiveRecord
             ->where(['project_id' => $task])
             ->orderBy(['created_at'=>SORT_DESC])
             ->one();
-        file_put_contents('/tmp/xielei.txt',print_r($config,true)."55555\n",FILE_APPEND);
 
         return strstr($config['upload_path'].$config['file_name'], '.zip',true);
     }
