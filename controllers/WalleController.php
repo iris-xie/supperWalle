@@ -507,7 +507,6 @@ class WalleController extends Controller
         $config_path = Configuration::getNewestConfig($project_id);
         /*$sql = 'SELECT upload_path,file_name FROM project_configuration WHERE project_id = '.$link_id.' ORDER BY updated_at DESC LIMIT 1';
         $config_path = Configuration::findBySql($sql)->one();*/
-        file_put_contents('/tmp/xielei.txt',print_r($config_path,true)."444\n",FILE_APPEND);
 
         $ret = $revision->copyConfig($this->task,$config_path); // 拷贝配置文件
         // 记录执行时间

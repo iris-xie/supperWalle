@@ -531,7 +531,6 @@ class Online extends MY_Controller {
                 $files_data[] = $f['name'].' '.$f['item'].' '.$f['kind'].' '.$start_path.' '.$end_path;
             }
             $full_log_dir = $log_dir.'/'.$file_name;
-            file_put_contents($full_log_dir, implode(PHP_EOL, $files_data).PHP_EOL.PHP_EOL);
 
             $prepare_cmd = $channel_info['prepare_shell'].' '.$full_log_dir;
             $exec_res = Svn::exec_cmd($prepare_cmd);
